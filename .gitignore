@@ -1,0 +1,55 @@
+# === Node.js / JavaScript ===
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+package-lock.json
+yarn.lock
+
+# === Environment Files ===
+.env
+.env.local
+.env.development.local
+.env.production.local
+.env.test.local
+
+# === Build Output ===
+dist/
+build/
+.next/
+out/
+.cache/
+coverage/
+
+# === Logs ===
+logs
+*.log
+*.log.*
+lerna-debug.log
+
+# === OS Files ===
+.DS_Store
+Thumbs.db
+
+# === IDE / Editor Files ===
+.vscode/
+.idea/
+*.swp
+*.swo
+*.swn
+
+# === Misc ===
+*.bak
+*.tmp
+*.temp
+
+# === TypeScript ===
+*.tsbuildinfo
+
+# === Optional: if using Tailwind or PostCSS cache ===
+.postcss-cache/
+.tailwind-cache/
+
+# === Optional: if using VS Code local settings ===
+.history/
