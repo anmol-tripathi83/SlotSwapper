@@ -29,7 +29,7 @@ app.use('/api', swapRoutes);
 
 // Basic route
 app.get('/api/health', (req, res) => {
-  res.json({ message: 'SlotSwapper API is running!' });
+  res.json({ message: 'SlotXchange API is running!' });
 });
 
 // Safe 404 handler - only for API routes
