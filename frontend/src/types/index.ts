@@ -12,7 +12,7 @@ export interface Event {
   startTime: string;
   endTime: string;
   status: EventStatus;
-  userId: string;
+  userId: string | { _id: string; name: string; email: string }; // Allow both string and populated user object
   createdAt: string;
   updatedAt: string;
 }
