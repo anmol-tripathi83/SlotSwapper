@@ -45,6 +45,31 @@ const SwapRequests: React.FC = () => {
     return new Date(dateString).toLocaleString();
   };
 
+  // Safe accessor functions to prevent null errors
+  const getRequesterSlotTitle = (request: SwapRequest) => {
+    return request.requesterSlotId?.title || 'Unknown Slot';
+  };
+
+  const getRequesteeSlotTitle = (request: SwapRequest) => {
+    return request.requesteeSlotId?.title || 'Unknown Slot';
+  };
+
+  const getRequesterSlotTime = (request: SwapRequest) => {
+    return request.requesterSlotId?.startTime ? formatDate(request.requesterSlotId.startTime) : 'Unknown time';
+  };
+
+  const getRequesteeSlotTime = (request: SwapRequest) => {
+    return request.requesteeSlotId?.startTime ? formatDate(request.requesteeSlotId.startTime) : 'Unknown time';
+  };
+
+  const getRequesterName = (request: SwapRequest) => {
+    return request.requesterUserId?.name || 'Unknown User';
+  };
+
+  const getRequesteeName = (request: SwapRequest) => {
+    return request.requesteeUserId?.name || 'Unknown User';
+  };
+
   if (loading) {
     return <div className="text-center py-4">Loading swap requests...</div>;
   }
@@ -71,13 +96,13 @@ const SwapRequests: React.FC = () => {
                 <div className="flex justify-between items-center">
                   <div>
                     <h4 className="text-lg font-medium">
-                      {request.requesterUserId.name} wants to swap
+                      {getRequesterName(request)} wants to swap
                     </h4>
                     <p className="text-sm text-gray-500">
-                      Their slot: {request.requesterSlotId.title} ({formatDate(request.requesterSlotId.startTime)})
+                      Their slot: {getRequesterSlotTitle(request)} ({getRequesterSlotTime(request)})
                     </p>
                     <p className="text-sm text-gray-500">
-                      For your slot: {request.requesteeSlotId.title} ({formatDate(request.requesteeSlotId.startTime)})
+                      For your slot: {getRequesteeSlotTitle(request)} ({getRequesteeSlotTime(request)})
                     </p>
                     <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
                       request.status === 'PENDING' ? 'bg-yellow-100 text-yellow-800' : 
@@ -120,13 +145,13 @@ const SwapRequests: React.FC = () => {
               <div key={request._id} className="bg-white shadow overflow-hidden sm:rounded-lg p-4">
                 <div>
                   <h4 className="text-lg font-medium">
-                    You requested to swap with {request.requesteeUserId.name}
+                    You requested to swap with {getRequesteeName(request)}
                   </h4>
                   <p className="text-sm text-gray-500">
-                    Your slot: {request.requesterSlotId.title} ({formatDate(request.requesterSlotId.startTime)})
+                    Your slot: {getRequesterSlotTitle(request)} ({getRequesterSlotTime(request)})
                   </p>
                   <p className="text-sm text-gray-500">
-                    Their slot: {request.requesteeSlotId.title} ({formatDate(request.requesteeSlotId.startTime)})
+                    Their slot: {getRequesteeSlotTitle(request)} ({getRequesteeSlotTime(request)})
                   </p>
                   <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
                     request.status === 'PENDING' ? 'bg-yellow-100 text-yellow-800' : 

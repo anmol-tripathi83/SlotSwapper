@@ -32,7 +32,7 @@ const LoginPage: React.FC = () => {
         <div className="text-center">
           <Logo size="large" className="justify-center mb-2" />
           <h2 className="mt-2 text-3xl font-bold text-gray-900">
-            Welcome back
+            Welcome Back
           </h2>
           <p className="mt-2 text-sm text-gray-600">
             Sign in to your SlotXchange account
@@ -50,7 +50,7 @@ const LoginPage: React.FC = () => {
             <div className="space-y-4">
               <div>
                 <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
-                  Email address
+                  Email Address
                 </label>
                 <input
                   id="email"
@@ -100,7 +100,7 @@ const LoginPage: React.FC = () => {
                 to="/register"
                 className="font-medium text-primary-600 hover:text-primary-500 transition-colors"
               >
-                Sign up for free
+                Sign up
               </Link>
             </div>
           </form>
