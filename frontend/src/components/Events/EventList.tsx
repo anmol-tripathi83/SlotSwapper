@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import type { Event } from '../../types';
 import { eventService } from '../../services/eventService';
+import EventCard from './EventCard';
 
 const EventList: React.FC = () => {
   const [events, setEvents] = useState<Event[]>([]);
@@ -42,21 +43,6 @@ const EventList: React.FC = () => {
     }
   };
 
-  const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleString();
-  };
-
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case 'SWAPPABLE':
-        return 'bg-green-100 text-green-800';
-      case 'SWAP_PENDING':
-        return 'bg-yellow-100 text-yellow-800';
-      default:
-        return 'bg-gray-100 text-gray-800';
-    }
-  };
-
   if (loading) {
     return <div className="text-center py-4">Loading events...</div>;
   }
@@ -75,41 +61,12 @@ const EventList: React.FC = () => {
         </div>
       ) : (
         events.map((event) => (
-          <div key={event._id} className="bg-white shadow overflow-hidden sm:rounded-lg">
-            <div className="px-4 py-5 sm:px-6 flex justify-between items-center">
-              <div>
-                <h3 className="text-lg leading-6 font-medium text-gray-900">{event.title}</h3>
-                <p className="mt-1 max-w-2xl text-sm text-gray-500">
-                  {formatDate(event.startTime)} - {formatDate(event.endTime)}
-                </p>
-              </div>
-              <div className="flex items-center space-x-2">
-                <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getStatusColor(event.status)}`}>
-                  {event.status}
-                </span>
-                
-                {event.status !== 'SWAP_PENDING' && (
-                  <button
-                    onClick={() => handleStatusChange(event._id, event.status === 'SWAPPABLE' ? 'BUSY' : 'SWAPPABLE')}
-                    className={`px-3 py-1 text-xs rounded ${
-                      event.status === 'SWAPPABLE' 
-                        ? 'bg-gray-200 text-gray-800 hover:bg-gray-300' 
-                        : 'bg-green-200 text-green-800 hover:bg-green-300'
-                    }`}
-                  >
-                    {event.status === 'SWAPPABLE' ? 'Mark as Busy' : 'Mark as Swappable'}
-                  </button>
-                )}
-                
-                <button
-                  onClick={() => handleDelete(event._id)}
-                  className="px-3 py-1 text-xs bg-red-200 text-red-800 rounded hover:bg-red-300"
-                >
-                  Delete
-                </button>
-              </div>
-            </div>
-          </div>
+          <EventCard
+            key={event._id}
+            event={event}
+            onStatusChange={handleStatusChange}
+            onDelete={handleDelete}
+          />
         ))
       )}
     </div>

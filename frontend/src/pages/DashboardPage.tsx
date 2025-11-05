@@ -1,29 +1,47 @@
 import React, { useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
+import Navigation from '../components/Layout/Navigation';
 import EventList from '../components/Events/EventList';
 import EventForm from '../components/Events/EventForm';
 import Marketplace from '../components/Marketplace/Marketplace';
 import SwapRequests from '../components/SwapRequests/SwapRequests';
+import LoadingSpinner from '../components/Common/LoadingSpinner';
 
 type ActiveTab = 'events' | 'marketplace' | 'requests';
 
 const DashboardPage: React.FC = () => {
-  const { user, logout } = useAuth();
+  const { user, loading: authLoading } = useAuth();
   const [activeTab, setActiveTab] = useState<ActiveTab>('events');
   const [showEventForm, setShowEventForm] = useState(false);
 
+  // Create a wrapper function that accepts string and asserts it as ActiveTab
+  const handleTabChange = (tab: string) => {
+    setActiveTab(tab as ActiveTab);
+  };
+
   const renderContent = () => {
+    if (authLoading) {
+      return (
+        <div className="flex justify-center items-center h-64">
+          <LoadingSpinner size="large" text="Loading your dashboard..." />
+        </div>
+      );
+    }
+
     switch (activeTab) {
       case 'events':
         return (
-          <div className="space-y-6">
+          <div className="space-y-6 animate-fade-in">
             <div className="flex justify-between items-center">
-              <h2 className="text-2xl font-bold">My Events</h2>
+              <div>
+                <h2 className="text-2xl font-bold text-gray-900">My Schedule</h2>
+                <p className="text-gray-600">Manage your time slots and availability</p>
+              </div>
               <button
                 onClick={() => setShowEventForm(true)}
-                className="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700"
+                className="bg-gradient-to-r from-primary-600 to-secondary-600 text-white px-4 py-2 rounded-lg font-medium hover:from-primary-700 hover:to-secondary-700 transition-all duration-200 shadow-sm"
               >
-                Create Event
+                + Add Time Slot
               </button>
             </div>
             {showEventForm && (
@@ -42,62 +60,12 @@ const DashboardPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100">
-      {/* Navigation */}
-      <nav className="bg-white shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between h-16">
-            <div className="flex items-center">
-              <h1 className="text-xl font-semibold">SlotXchange</h1>
-              <div className="ml-10 flex space-x-4">
-                <button
-                  onClick={() => setActiveTab('events')}
-                  className={`px-3 py-2 rounded-md text-sm font-medium ${
-                    activeTab === 'events'
-                      ? 'bg-indigo-100 text-indigo-700'
-                      : 'text-gray-500 hover:text-gray-700'
-                  }`}
-                >
-                  My Events
-                </button>
-                <button
-                  onClick={() => setActiveTab('marketplace')}
-                  className={`px-3 py-2 rounded-md text-sm font-medium ${
-                    activeTab === 'marketplace'
-                      ? 'bg-indigo-100 text-indigo-700'
-                      : 'text-gray-500 hover:text-gray-700'
-                  }`}
-                >
-                  Marketplace
-                </button>
-                <button
-                  onClick={() => setActiveTab('requests')}
-                  className={`px-3 py-2 rounded-md text-sm font-medium ${
-                    activeTab === 'requests'
-                      ? 'bg-indigo-100 text-indigo-700'
-                      : 'text-gray-500 hover:text-gray-700'
-                  }`}
-                >
-                  Swap Requests
-                </button>
-              </div>
-            </div>
-            <div className="flex items-center space-x-4">
-              <span className="text-gray-700">Welcome, {user?.name}</span>
-              <button
-                onClick={logout}
-                className="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700"
-              >
-                Logout
-              </button>
-            </div>
-          </div>
-        </div>
-      </nav>
-
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+      <Navigation activeTab={activeTab} onTabChange={handleTabChange} />
+      
       {/* Main Content */}
-      <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
-        <div className="px-4 py-6 sm:px-0">
+      <div className="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+        <div className="animate-slide-up">
           {renderContent()}
         </div>
       </div>
