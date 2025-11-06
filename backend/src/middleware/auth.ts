@@ -17,9 +17,7 @@ export const authenticate = (req: AuthRequest, res: Response, next: NextFunction
     const decoded = verifyToken(token);
     req.user = decoded;
     next();
-    return;
   } catch (error) {
     res.status(401).json({ message: 'Token is not valid' });
-    return;
   }
 };

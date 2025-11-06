@@ -18,11 +18,9 @@ export const getSwappableSlots = async (req: AuthRequest, res: Response): Promis
     }).populate('userId', 'name email');
 
     res.json(swappableSlots);
-    return;
   } catch (error) {
     console.error('Get swappable slots error:', error);
     res.status(500).json({ message: 'Server error' });
-    return;
   }
 };
 
@@ -81,11 +79,9 @@ export const createSwapRequest = async (req: AuthRequest, res: Response): Promis
     await swapRequest.populate('requesteeUserId', 'name email');
 
     res.status(201).json(swapRequest);
-    return;
   } catch (error) {
     console.error('Create swap request error:', error);
     res.status(500).json({ message: 'Server error' });
-    return;
   }
 };
 
@@ -137,7 +133,6 @@ export const respondToSwapRequest = async (req: AuthRequest, res: Response): Pro
       ]);
 
       res.json({ message: 'Swap accepted successfully', swapRequest });
-      return;
     } else {
       // REJECT: Reset slots back to SWAPPABLE
       swapRequest.status = 'REJECTED';
@@ -149,12 +144,10 @@ export const respondToSwapRequest = async (req: AuthRequest, res: Response): Pro
       ]);
 
       res.json({ message: 'Swap rejected', swapRequest });
-      return;
     }
   } catch (error) {
     console.error('Respond to swap request error:', error);
     res.status(500).json({ message: 'Server error' });
-    return;
   }
 };
 
@@ -189,10 +182,8 @@ export const getMySwapRequests = async (req: AuthRequest, res: Response): Promis
       incomingRequests,
       outgoingRequests
     });
-    return;
   } catch (error) {
     console.error('Get swap requests error:', error);
     res.status(500).json({ message: 'Server error' });
-    return;
   }
 };

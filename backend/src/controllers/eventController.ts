@@ -22,11 +22,9 @@ export const createEvent = async (req: AuthRequest, res: Response): Promise<void
 
     await event.save();
     res.status(201).json(event);
-    return;
   } catch (error) {
     console.error('Create event error:', error);
     res.status(500).json({ message: 'Server error' });
-    return;
   }
 };
 
@@ -41,11 +39,9 @@ export const getMyEvents = async (req: AuthRequest, res: Response): Promise<void
 
     const events = await Event.find({ userId }).sort({ startTime: 1 });
     res.json(events);
-    return;
   } catch (error) {
     console.error('Get events error:', error);
     res.status(500).json({ message: 'Server error' });
-    return;
   }
 };
 
@@ -74,11 +70,9 @@ export const updateEvent = async (req: AuthRequest, res: Response): Promise<void
 
     await event.save();
     res.json(event);
-    return;
   } catch (error) {
     console.error('Update event error:', error);
     res.status(500).json({ message: 'Server error' });
-    return;
   }
 };
 
@@ -100,10 +94,8 @@ export const deleteEvent = async (req: AuthRequest, res: Response): Promise<void
     }
 
     res.json({ message: 'Event deleted successfully' });
-    return;
   } catch (error) {
     console.error('Delete event error:', error);
     res.status(500).json({ message: 'Server error' });
-    return;
   }
 };

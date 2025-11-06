@@ -2,7 +2,6 @@ import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import path from 'path';
 
 import authRoutes from './routes/auth';
 import eventRoutes from './routes/events';
@@ -13,7 +12,7 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// CORS configuration for production
+// CORS configuration
 const corsOptions = {
   origin: process.env.NODE_ENV === 'production' 
     ? process.env.CLIENT_URL 
@@ -25,7 +24,7 @@ app.use(cors(corsOptions));
 app.use(express.json());
 
 // Log all requests
-app.use((req, res, next) => {
+app.use((req: express.Request, res: express.Response, next: express.NextFunction) => {
   console.log(`${new Date().toISOString()} - ${req.method} ${req.path}`);
   next();
 });
@@ -36,19 +35,19 @@ app.use('/api/events', eventRoutes);
 app.use('/api', swapRoutes);
 
 // Basic route
-app.get('/api/health', (req, res) => {
+app.get('/api/health', (req: express.Request, res: express.Response) => {
   res.json({ 
     message: 'SlotSwapper API is running!',
     environment: process.env.NODE_ENV 
   });
 });
 
-// MongoDB connection with better error handling
+// MongoDB connection
 mongoose.connect(process.env.MONGODB_URI as string)
   .then(() => console.log('Connected to MongoDB'))
-  .catch((error) => {
+  .catch((error: Error) => {
     console.error('MongoDB connection error:', error);
-    process.exit(1); // Exit if DB connection fails
+    process.exit(1);
   });
 
 // Start server
