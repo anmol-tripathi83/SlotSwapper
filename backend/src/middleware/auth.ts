@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { verifyToken } from '../utils/auth';
 
+// Extend the Express Request to include user property
 export interface AuthRequest extends Request {
   user?: { userId: string };
 }
