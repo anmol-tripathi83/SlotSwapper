@@ -1,6 +1,12 @@
 import axios from 'axios';
 
+// Debug environment variables
+console.log('Environment VITE_API_URL:', import.meta.env.VITE_API_URL);
+console.log('All env variables:', import.meta.env);
+
 const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+
+console.log('Final API_BASE_URL:', API_BASE_URL);
 
 const api = axios.create({
   baseURL: `${API_BASE_URL}/api`,
@@ -12,7 +18,7 @@ api.interceptors.request.use((config) => {
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
-  console.log('API Request:', config.method?.toUpperCase(), config.url, config.data);
+  console.log('API Request:', config.method?.toUpperCase(), config.url, config.baseURL);
   return config;
 });
 
