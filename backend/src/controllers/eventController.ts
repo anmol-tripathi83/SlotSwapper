@@ -1,8 +1,7 @@
-import { Response } from 'express';
+import { Request, Response } from 'express';
 import Event from '../models/Event';
-import { AuthRequest } from '../middleware/auth';
 
-export const createEvent = async (req: AuthRequest, res: Response): Promise<void> => {
+export const createEvent = async (req: Request, res: Response): Promise<void> => {
   try {
     const { title, startTime, endTime, status } = req.body;
     const userId = req.user?.userId;
@@ -28,7 +27,7 @@ export const createEvent = async (req: AuthRequest, res: Response): Promise<void
   }
 };
 
-export const getMyEvents = async (req: AuthRequest, res: Response): Promise<void> => {
+export const getMyEvents = async (req: Request, res: Response): Promise<void> => {
   try {
     const userId = req.user?.userId;
     
@@ -45,7 +44,7 @@ export const getMyEvents = async (req: AuthRequest, res: Response): Promise<void
   }
 };
 
-export const updateEvent = async (req: AuthRequest, res: Response): Promise<void> => {
+export const updateEvent = async (req: Request, res: Response): Promise<void> => {
   try {
     const { id } = req.params;
     const { title, startTime, endTime, status } = req.body;
@@ -76,7 +75,7 @@ export const updateEvent = async (req: AuthRequest, res: Response): Promise<void
   }
 };
 
-export const deleteEvent = async (req: AuthRequest, res: Response): Promise<void> => {
+export const deleteEvent = async (req: Request, res: Response): Promise<void> => {
   try {
     const { id } = req.params;
     const userId = req.user?.userId;

@@ -1,12 +1,8 @@
 import { Request, Response, NextFunction } from 'express';
 import { verifyToken } from '../utils/auth';
 
-// Extend the Express Request to include user property
-export interface AuthRequest extends Request {
-  user?: { userId: string };
-}
-
-export const authenticate = (req: AuthRequest, res: Response, next: NextFunction): void => {
+// Now we can use Request directly since we've augmented it
+export const authenticate = (req: Request, res: Response, next: NextFunction): void => {
   const token = req.header('Authorization')?.replace('Bearer ', '');
 
   if (!token) {

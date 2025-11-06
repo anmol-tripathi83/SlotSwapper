@@ -2,7 +2,6 @@ import { Request, Response } from 'express';
 import bcrypt from 'bcryptjs';
 import User from '../models/User';
 import { generateToken } from '../utils/auth';
-import { AuthRequest } from '../middleware/auth';
 
 export const register = async (req: Request, res: Response): Promise<void> => {
   try {
@@ -35,10 +34,8 @@ export const register = async (req: Request, res: Response): Promise<void> => {
         email: user.email,
       },
     });
-    return;
   } catch (error) {
     res.status(500).json({ message: 'Server error' });
-    return;
   }
 };
 
@@ -71,14 +68,12 @@ export const login = async (req: Request, res: Response): Promise<void> => {
         email: user.email,
       },
     });
-    return;
   } catch (error) {
     res.status(500).json({ message: 'Server error' });
-    return;
   }
 };
 
-export const getMe = async (req: AuthRequest, res: Response): Promise<void> => {
+export const getMe = async (req: Request, res: Response): Promise<void> => {
   try {
     const user = await User.findById(req.user?.userId).select('-password');
     if (!user) {
@@ -86,9 +81,7 @@ export const getMe = async (req: AuthRequest, res: Response): Promise<void> => {
       return;
     }
     res.json(user);
-    return;
   } catch (error) {
     res.status(500).json({ message: 'Server error' });
-    return;
   }
 };

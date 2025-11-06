@@ -1,9 +1,8 @@
-import { Response } from 'express';
+import { Request, Response } from 'express';
 import Event from '../models/Event';
 import SwapRequest from '../models/SwapRequest';
-import { AuthRequest } from '../middleware/auth';
 
-export const getSwappableSlots = async (req: AuthRequest, res: Response): Promise<void> => {
+export const getSwappableSlots = async (req: Request, res: Response): Promise<void> => {
   try {
     const userId = req.user?.userId;
 
@@ -24,7 +23,7 @@ export const getSwappableSlots = async (req: AuthRequest, res: Response): Promis
   }
 };
 
-export const createSwapRequest = async (req: AuthRequest, res: Response): Promise<void> => {
+export const createSwapRequest = async (req: Request, res: Response): Promise<void> => {
   try {
     const { mySlotId, theirSlotId } = req.body;
     const requesterUserId = req.user?.userId;
@@ -85,7 +84,7 @@ export const createSwapRequest = async (req: AuthRequest, res: Response): Promis
   }
 };
 
-export const respondToSwapRequest = async (req: AuthRequest, res: Response): Promise<void> => {
+export const respondToSwapRequest = async (req: Request, res: Response): Promise<void> => {
   try {
     const { requestId } = req.params;
     const { accept } = req.body;
@@ -151,7 +150,7 @@ export const respondToSwapRequest = async (req: AuthRequest, res: Response): Pro
   }
 };
 
-export const getMySwapRequests = async (req: AuthRequest, res: Response): Promise<void> => {
+export const getMySwapRequests = async (req: Request, res: Response): Promise<void> => {
   try {
     const userId = req.user?.userId;
 
