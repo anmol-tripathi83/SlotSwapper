@@ -5,6 +5,7 @@ import ErrorBoundary from './components/Common/ErrorBoundary';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import DashboardPage from './pages/DashboardPage';
+import NotFoundPage from './pages/NotFoundPage'; 
 
 // Protected Route component
 const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -38,6 +39,8 @@ function App() {
               }
             />
             <Route path="/" element={<Navigate to="/dashboard" />} />
+            {/* Add catch-all route for 404s */}
+            <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </AuthProvider>
       </Router>
